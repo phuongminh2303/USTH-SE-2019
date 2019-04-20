@@ -1,15 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var passport = require("passport");
-var csrf = require("csurf");  // to avoid your session from being stolen
 var User     = require("../models/user");
 var Cart = require("../models/cart");
 var Order = require("../models/order");
 var Food = require("../models/food");
 var middleware = require("../middleware/index");
-
-var csrfProtection = csrf();
-router.use(csrfProtection); // telling express that all the route here should be protected by csrf protection
 
 
 /* GET home page. */
@@ -89,10 +85,8 @@ router.get("/logout", function(req, res){
   res.redirect("/");
 });
 
-
-
 // add to cart route
-router.get('/add-to-cart/:idd', function(req, res, next) {
+router.get('/addtocart/:idd', function(req, res) {
   var foodId = req.params.idd;
   var cart = new Cart(req.session.cart ? req.session.cart : {}) ;    //  if a cart is already in session pass that otherwise pass an empty object
   Food.findById(foodId, function (err, food) {
@@ -100,14 +94,19 @@ router.get('/add-to-cart/:idd', function(req, res, next) {
       console.log(err);
       return res.redirect("/")
     }
-    cart.add(food, food.id);
-    req.session.oldPosition = "/#"+foodId;
-    req.session.cart = cart;
-    console.log(req.session.cart);
-    console.log(req.session.oldPosition);
-    res.redirect("/foods/oldPosition")
+    var exist = cart.add(food, food.id);
+    req.session.cart = cart
+    req.session.cart.added = food
+    req.session.cart.exist = exist
+    res.json(req.session.cart);
   })
 });
+
+//delete session
+router.get('/resetsession', function(req, res) {
+  req.session.destroy()
+  res.redirect('/foods')
+})
 
 //reduce an item in cart
 router.get("/reduce/:id",function (req, res, next) {

@@ -4,6 +4,7 @@ var express         = require("express"),
     path            = require('path'),
     bodyParser      = require('body-parser'),
     flash           = require('connect-flash'),
+    csrf            = require("csurf");  // to avoid your session from being stolen
     mongoose        = require('mongoose'),
     session         = require('express-session'),
     passport        = require("passport"),  // login and SignUp authentication
@@ -15,7 +16,6 @@ var express         = require("express"),
     MongoStore      = require("connect-mongo")(session),
     seedDB          = require("./seed/seed"),
     User            = require("./models/user");    // user model
-
 
 //cofigure dotenv
 var dotenv = require('dotenv').config({path: path.join(__dirname, '.env')}); // for env variables
@@ -45,7 +45,6 @@ app.use(methodOverride("_method"));     // for authentication
 app.use(cookieParser('secret'));        // for authentication
 seedDB();
 
-
 //  PASSPORT CONFIGURATION
 app.use(session({
     secret: "One again Rusty wins the cutest dog!",
@@ -67,6 +66,15 @@ app.use(async function (req, res, next) {
     res.locals.error =  req.flash("error");
     res.locals.success =  req.flash("success");
     res.locals.session = req.session;
+    next();
+});
+
+//csrf
+app.use(csrf());
+app.use(function (req, res, next) {
+    var csrfToken = req.csrfToken();
+    res.cookie('XSRF-TOKEN', csrfToken);
+    res.locals.csrfToken = csrfToken;
     next();
 });
 
