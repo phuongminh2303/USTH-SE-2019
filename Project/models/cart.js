@@ -6,9 +6,11 @@ module.exports = function Cart(oldCart) {
     this.totalCost = oldCart.totalCost || 0;
 
     this.add = function(item, id) {
+        var exist = true;
         var storedItem = this.items[id];
         if (!storedItem) {
             storedItem = this.items[id] = {item: item, qty: 0, cost: 0};
+            exist = !exist
         }
         storedItem.qty++;
         storedItem.item.cost = roundToTwo(storedItem.item.cost);
@@ -17,9 +19,8 @@ module.exports = function Cart(oldCart) {
         this.totalQty++;
         this.totalCost += storedItem.item.cost;
         this.totalCost = roundToTwo(this.totalCost);
-
-        console.log(this.totalCost)
-
+        
+        return exist
     };
 
 
