@@ -235,7 +235,7 @@
                             <strong><%= food.cost%>$</strong>
                         </span>
                         <span class="float-right">
-                            <a data-toggle="tooltip" data-placement="top" title="Add to Cart" href="/addToCart/<%=food._id%>">
+                            <a class="addCart" data-toggle="tooltip" data-placement="top" title="Add to Cart" data-food-id="<%=food._id%>">
                                 <i class="fas fa-shopping-cart grey-text ml-3 "> </i>
                             </a>
                             <a data-toggle="tooltip" data-placement="top" title="Share">
@@ -306,19 +306,21 @@
                             <% var i=0
                             cartfoods.forEach((cartfood)=>{ %>
                             <%i++%>
-                            <tr>
+                            <tr class="removable<%=cartfood.item._id%>">
                                 <th scope="row"><%=i%></th>
                                 <th class="pr-0"><img src="<%= cartfood.item.image%>" alt="" style=" max-width:60%" class="img-fluid"></th>
                                 <td class="pl-0"><%=cartfood.item.name%></td>
                                 <td><%=cartfood.item.cost%>$</td>
                                 <td class="text-center" id="qty<%=cartfood.item._id%>"><%=cartfood.qty%></td>
                                 <td>
-                                    <a href="/increase/<%=cartfood.item._id%>" ><i class="fas fa-plus "></i></a>
+                                    <a class="increaseval" data-cartfood-id="<%=cartfood.item._id%>" ><i class="fas fa-plus "></i></a>
                                 </td>
                                 <td>
-                                    <a href="/reduce/<%=cartfood.item._id%>" id="reduce"> <i class="fas fa-minus"></i></a>
+                                    <a class="decreaseval" data-cartfood-id="<%=cartfood.item._id%>"> <i class="fas fa-minus"></i></a>
                                 </td>
-                                <td><a href="/remove/<%=cartfood.item._id%>" id="remove" class="btn btn-sm btn-outline-danger">Remove</a></td>
+                                <td>
+                                    <a class="btn btn-sm btn-outline-danger removeval" data-cartfood-id="<%=cartfood.item._id%>">Remove</a>
+                                </td>
                             </tr>
                             <%});%>
                             <% } else {%>
