@@ -25,7 +25,6 @@ module.exports = function Cart(oldCart) {
 
 
     this.reduceByOne = function(id) {
-        console.log(this.totalCost+"1");
         this.items[id].item.cost =  roundToTwo(this.items[id].item.cost);
         this.items[id].qty--;
         this.items[id].cost -= this.items[id].item.cost;
@@ -33,37 +32,28 @@ module.exports = function Cart(oldCart) {
         this.totalQty--;
         this.totalCost -=  this.items[id].item.cost ;
         this.totalCost =  roundToTwo(this.totalCost);
-        console.log(this.totalCost+"2");
-
         if (this.items[id].qty <= 0) {
             delete this.items[id];
         }
 
     };
     this.increaseByOne = function(id) {
-        console.log(this.totalCost+"1");
         this.items[id].item.cost =  roundToTwo(this.items[id].item.cost);
         this.items[id].qty++;
         this.items[id].cost += this.items[id].item.cost;
         this.items[id].cost =  roundToTwo(this.items[id].cost);
         this.totalQty++;
         this.totalCost +=  this.items[id].item.cost ;
-        this.totalCost =  roundToTwo(this.totalCost);
-        console.log(this.totalCost+"2");
-
-
-
+        this.totalCost = roundToTwo(this.totalCost);
     };
 
     this.removeItem = function(id) {
-        console.log(this.totalCost+"3");
         this.totalQty -= this.items[id].qty;
         this.items[id].cost =  roundToTwo(this.items[id].cost);
         this.totalCost -= this.items[id].cost ;
         this.totalCost =  roundToTwo(this.totalCost);
 
         delete this.items[id];
-        console.log(this.totalCost+"4");
     };
 
     this.generateArray = function() {

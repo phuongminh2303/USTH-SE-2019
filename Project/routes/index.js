@@ -113,41 +113,24 @@ router.get("/reduce/:id",function (req, res, next) {
   var foodId = req.params.id;
   var cart = new Cart(req.session.cart ? req.session.cart : {}) ;    //  if a cart is already in session pass that otherwise pass an empty object
   cart.reduceByOne(foodId);
-  var oldUrl = req.session.oldUrl;
-  req.session.oldUrl = null;
   req.session.cart = cart;
-  req.session.toggleModal = true;
-  console.log(req.session.toggleModal+ " from reduce from cart route");
-  // res.redirect(oldUrl);
-  console.log(req.session.cart);
-   res.redirect("/foods");
+  res.json(req.session.cart);
 });
-router.get("/increase/:id",function (req, res, next) {
+router.get("/increase/:id",function (req, res) {
   var foodId = req.params.id;
   var cart = new Cart(req.session.cart ? req.session.cart : {}) ;    //  if a cart is already in session pass that otherwise pass an empty object
   cart.increaseByOne(foodId);
-  var oldUrl = req.session.oldUrl;
-  req.session.oldUrl = null;
   req.session.cart = cart;
-  req.session.toggleModal = true;
-  console.log(req.session.toggleModal+ " from reduce from cart route");
-  // res.redirect(oldUrl);
-  console.log(req.session.cart);
-   res.redirect("/foods");
+  res.json(req.session.cart);
 });
 
 // remove item from cart route
 router.get('/remove/:id', function(req, res, next) {
   var foodId = req.params.id;
   var cart = new Cart(req.session.cart ? req.session.cart : {});
-
   cart.removeItem(foodId);
   req.session.cart = cart;
-  req.session.toggleModal = true;
-  console.log(req.session.toggleModal+ " from remove from cart route");
-  console.log(req.session.cart);
-
-  res.redirect("/foods");
+  res.json(req.session.cart);
 });
 
 //checkout

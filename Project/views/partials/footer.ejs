@@ -172,7 +172,6 @@
                 _csrf: $('meta[name="csrf-token"]').attr('content'),
             },
             success: function (data) {
-                console.log(data)
                 var added = data.added
                 var asd ='#qty'+ data.added._id
                 var size = Object.keys(data.items).length;
@@ -180,21 +179,21 @@
                 $('.totalcost').replaceWith('<td class="totalcost">'+data.totalCost+'$</td>');
                 if (data.exist === false){
                     tr = ''
-                    tr += '<tr>'
+                    tr += '<tr class="removable'+data.added._id+'">'
                     tr +=     '<th scope="row">'+size+'</th>'
                     tr +=     '<th class="pr-0"><img src="'+data.added.image+'" alt="" style=" max-width:60%" class="img-fluid"></th>'
                     tr +=     '<td class="pl-0">'+data.added.name+'</td>'
                     tr +=     '<td>'+data.added.cost+'$</td>'
                     tr +=     '<td class="text-center" id="qty'+data.added._id+'">1</td>'
                     tr +=     '<td>'
-                    tr +=         '<a href="/increase/'+data.added._id+'" ><i class="fas fa-plus "></i></a>'
+                    tr +=         '<a class="increaseval" data-cartfood-id="'+data.added._id+'" ><i class="fas fa-plus "></i></a>'
                     tr +=     '</td>'
                     tr +=     '<td>'
-                    tr +=         '<a href="/reduce/'+data.added._id+'" id="reduce"> <i class="fas fa-minus"></i></a>'
+                    tr +=         '<a class="reduceval" data-cartfood-id="'+data.added._id+'"> <i class="fas fa-minus"></i></a>'
                     tr +=     '</td>'
-                    tr +=     '<td><a href="/remove/'+data.added._id+'" id="remove" class="btn btn-sm btn-outline-danger">Remove</a></td>'
+                    tr +=     '<td><a class="btn btn-sm btn-outline-danger removeval" data-cartfood-id="'+data.added._id+'">Remove</a></td>'
                     tr += '</tr>'
-                    $("#showfoodcart tbody  ").append(tr)
+                    $("#showfoodcart tbody").append(tr)
                 } else {
                     var countqty = $(asd).text();
                     countqty = Number(countqty) + 1;
@@ -203,23 +202,71 @@
             }
         })
     })
-
-    // var buttons = $(".add")
-    // for(var i=0; i< buttons.length; i++){
-    //     buttons[i].addEventListener("click", function () {
-
-    //         var foodId = this.getAttribute("foodId")
-    //         if (this.hasClass("active")) {
-    //             this.attr("href", "/remove/" + foodId);
-    //         } else {
-    //             this.attr("href", "/add-to-cart/" + foodId);
-    //         }
-    //     })
-    // }
-
-    // $("#reduce").on("click",function (event) {
-    //     event.preventDefault()
-    // })
+    $('#showfoodcart').on("click", ".increaseval",function(e){
+        e.preventDefault();
+        var cartfoodId = $(this).data('cartfood-id')
+        var url =  baseUrl + ('increase/') + cartfoodId
+        $.ajax({
+            type : 'get',
+            url : url,
+            data:{
+                _csrf: $('meta[name="csrf-token"]').attr('content'),
+            },
+            success : function(data) {
+                var num ='#qty' + cartfoodId
+                var countqty = $(num).text();
+                countqty = Number(countqty) + 1;
+                $('.totalqual').replaceWith('<span class="badge badge-danger totalqual">' + data.totalQty + '</span>');
+                $('.totalcost').replaceWith('<td class="totalcost">'+data.totalCost+'$</td>');
+                $(num).replaceWith('<td class="text-center" id="qty'+cartfoodId+'">'+countqty+'</td>')
+            } 
+        })
+    })
+    $('#showfoodcart').on("click", ".reduceval",function(e){
+        e.preventDefault();
+        var cartfoodId = $(this).data('cartfood-id')
+        var url =  baseUrl + ('reduce/') + cartfoodId
+        $.ajax({
+            type : 'get',
+            url : url,
+            data:{
+                _csrf: $('meta[name="csrf-token"]').attr('content'),
+            },
+            success : function(data) {
+                var num ='#qty' + cartfoodId
+                var countqty = $(num).text();
+                var removelink = ".removable" + cartfoodId
+                if (countqty == 1) {
+                    $(removelink).remove()
+                    $('.totalcost').replaceWith('<td class="totalcost">'+data.totalCost+'$</td>');                    
+                    $('.totalqual').replaceWith('<span class="badge badge-danger totalqual">' + data.totalQty + '</span>');
+                } else {
+                    countqty = Number(countqty) - 1;
+                    $('.totalqual').replaceWith('<span class="badge badge-danger totalqual">' + data.totalQty + '</span>');
+                    $('.totalcost').replaceWith('<td class="totalcost">'+data.totalCost+'$</td>');
+                    $(num).replaceWith('<td class="text-center" id="qty'+cartfoodId+'">'+countqty+'</td>')
+                }
+            } 
+        })
+    })    
+    $('#showfoodcart').on("click", ".removeval",function(e){
+        e.preventDefault();
+        var cartfoodId = $(this).data('cartfood-id')
+        var url =  baseUrl + ('remove/') + cartfoodId
+        $.ajax({
+            type : 'get',
+            url : url,
+            data:{
+                _csrf: $('meta[name="csrf-token"]').attr('content'),
+            },
+            success : function(data) {
+                var removelink = ".removable" + cartfoodId
+                $(removelink).remove()
+                $('.totalqual').replaceWith('<span class="badge badge-danger totalqual">' + data.totalQty + '</span>');
+                $('.totalcost').replaceWith('<td class="totalcost">'+data.totalCost+'$</td>');
+            } 
+        })
+    })
 </script>
 
 </body>
