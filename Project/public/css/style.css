@@ -9,6 +9,8 @@ body {
   font-family: 'Roboto Slab', serif;
   outline: none;
   padding: 0;
+  /* background-color: #EEE2DC; */
+  background-color: #fdffe5;
 }
 
 footer {

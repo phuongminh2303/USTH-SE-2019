@@ -23,14 +23,16 @@
             </ul>
             <ul class="nav navbar-nav nav-flex-icons ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link modalToggle" ><i
-                            class="fas fa-shopping-cart"></i> <span class="clearfix d-none d-sm-inline-block">Cart
-                            <span class="badge badge-danger totalqual"><%= (session.cart) ? session.cart.totalQty : "0" %></span>
+                    <a class="nav-link modalToggle"><i class="fas fa-shopping-cart"></i> <span
+                            class="clearfix d-none d-sm-inline-block">Cart
+                            <span
+                                class="badge badge-danger text-center"><%= (session.cart) ? session.cart.totalQty : "0" %></span>
                         </span></a>
                 </li>
                 <% if(currentUser){ %>
                 <li class="nav-item  <%= typeof page !== "undefined" && page === "orders" ? "active" : "" %>">
-                    <a class="nav-link " href="/orders" ><i class="fas fa-cash-register"></i> <span class="clearfix d-none d-sm-inline-block">Orders
+                    <a class="nav-link " href="/orders"><i class="fas fa-cash-register"></i> <span
+                            class="clearfix d-none d-sm-inline-block">Orders
                         </span>
                     </a>
                 </li>
@@ -78,21 +80,24 @@
 </div>
 <div style="height: 5rem"></div>
 <h1 class="text-center" id="menuText">Menu</h1>
-<span>
+<!-- <span>
     <a href="/resetsession" class="btn btn-primary btn-lg">Reset Session</a>
-</span>
+</span> -->
 <!--if user is admin show add new foods option-->
 <% if( currentUser && currentUser.isAdmin){ %>
-<span>
-    <a href="/foods/new" class="btn btn-primary btn-lg">Add New Pizzas</a>
-</span>
+<div class="container text-center">
+    <span>
+        <a href="/foods/new" class="btn btn-primary btn-lg">Add New Pizzas</a>
+    </span>
+</div>
+
 <% } %>
 
 <!-- Pizza section -->
 <div class="container">
     <h1 class="text-center" id="categoryName">Pizza</h1>
     <!-- Quote for fun :)) -->
-    <blockquote class="blockquote text-center m-0 p-0" >
+    <blockquote class="blockquote text-center m-0 p-0">
         <p class="mb-0">There's no better feeling in the world than a warm pizza box on your lap.</p>
         <footer class="blockquote-footer mb-3" id="df">Kevin James</footer>
     </blockquote>
@@ -102,9 +107,9 @@
         <% foods.forEach((food)=>{%>
         <% if(food.type === "pizza"){ %>
         <!-- Grid column -->
-            <div class="col-lg-3 col-md-6 mb-0 mb-4" id="<%= food._id%>">
+        <div class="col-lg-3 col-md-6 mb-0 mb-4" id="<%= food._id%>">
             <!-- Card -->
-            <div class="card card-cascade card-ecommerce shop-item">
+            <div class="card card-cascade card-ecommerce shop-item" style="height: 400px;">
                 <!-- Card image -->
                 <div class="view view-cascade overlay text-center">
                     <img src="<%= food.image%>" class="card-img-top img-fluid" alt="sample photo">
@@ -148,8 +153,9 @@
                             <strong><%= food.cost%>$</strong>
                         </span>
                         <span class="float-right">
-                            <a class="addCart" data-toggle="tooltip" data-placement="top" title="Add to Cart" data-food-id="<%=food._id%>" >
-                                <i class="fas fa-shopping-cart  ml-3 " > </i>
+                            <a class="addCart" data-toggle="tooltip" data-placement="top" title="Add to Cart"
+                                data-food-id="<%=food._id%>">
+                                <i class="fas fa-shopping-cart  ml-3 "> </i>
                             </a>
                             <a data-toggle="tooltip" data-placement="top" title="Share">
                                 <i class="fas fa-share-alt grey-text ml-3"></i>
@@ -182,16 +188,16 @@
 
 <!-- Pizza section -->
 <div class="container">
-    <h1 class="text-center" id="categoryName">Drink</h1>
+    <h1 class="text-center mb-20" id="categoryName">Drink</h1>
     <!-- Grid row -->
-    <div class="row shop-items">
+    <div class="row shop-items" style="padding-top: 20px;">
         <!--reading pizza data-->
         <% foods.forEach((food)=>{%>
         <% if(food.type == "drink"){ %>
         <!-- Grid column -->
-        <div class="col-lg-3 col-md-6 mb-0 mb-4" id="<%= food._id%>">
+        <div class="col-lg-3 col-md-6 mb-4" id="<%= food._id%>">
             <!-- Card -->
-            <div class="card card-cascade card-ecommerce shop-item">
+            <div class="card card-cascade card-ecommerce shop-item mt-20">
                 <!-- Card image -->
                 <div class="view view-cascade overlay text-center">
                     <img src="<%= food.image%>" class="card-img-top img-fluid" alt="sample photo">
@@ -235,7 +241,8 @@
                             <strong><%= food.cost%>$</strong>
                         </span>
                         <span class="float-right">
-                            <a class="addCart" data-toggle="tooltip" data-placement="top" title="Add to Cart" data-food-id="<%=food._id%>">
+                            <a class="addCart" data-toggle="tooltip" data-placement="top" title="Add to Cart"
+                                data-food-id="<%=food._id%>">
                                 <i class="fas fa-shopping-cart grey-text ml-3 "> </i>
                             </a>
                             <a data-toggle="tooltip" data-placement="top" title="Share">
@@ -272,24 +279,24 @@
 
 
 <!-- Modal: modalCart -->
-<div class="modal fade <%= typeof toggleModal !== "undefined" && toggleModal === true ? "modalOn" : "" %>" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
+<div class="modal fade <%= typeof toggleModal !== "undefined" && toggleModal === true ? "modalOn" : "" %>" id="myModal"
+    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog " role="document" style="width: 50%; max-width:110%">
         <div class="modal-content">
             <!--Header-->
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Your cart</h4>    
+                <h4 class="modal-title" id="myModalLabel">Your cart</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
-                
+
             </div>
             <!--Body-->
 
             <div class="modal-body">
-               
-                    <table class="table table-hover" id="showfoodcart">
-                        <thead>
+
+                <table class="table table-hover" id="showfoodcart">
+                    <thead>
                         <tr>
                             <th>#</th>
                             <th class="pr-0"></th>
@@ -300,33 +307,37 @@
                             <th></th>
                             <th></th>
                         </tr>
-                        </thead>
-                        <tbody>
-                            <% if (cartfoods && totalCost!=0    ){%>
-                            <% var i=0
+                    </thead>
+                    <tbody>
+                        <% if (cartfoods && totalCost!=0    ){%>
+                        <% var i=0
                             cartfoods.forEach((cartfood)=>{ %>
-                            <%i++%>
-                            <tr class="removable<%=cartfood.item._id%>">
-                                <th scope="row"><%=i%></th>
-                                <th class="pr-0"><img src="<%= cartfood.item.image%>" alt="" style=" max-width:60%" class="img-fluid"></th>
-                                <td class="pl-0"><%=cartfood.item.name%></td>
-                                <td><%=cartfood.item.cost%>$</td>
-                                <td class="text-center" id="qty<%=cartfood.item._id%>"><%=cartfood.qty%></td>
-                                <td>
-                                    <a class="increaseval" data-cartfood-id="<%=cartfood.item._id%>" ><i class="fas fa-plus "></i></a>
-                                </td>
-                                <td>
-                                    <a class="decreaseval" data-cartfood-id="<%=cartfood.item._id%>"> <i class="fas fa-minus"></i></a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-sm btn-outline-danger removeval" data-cartfood-id="<%=cartfood.item._id%>">Remove</a>
-                                </td>
-                            </tr>
-                            <%});%>
-                            <% } else {%>
-                            <% } %>
-                        </tbody>
-                        <tfoot>
+                        <%i++%>
+                        <tr class="removable<%=cartfood.item._id%>">
+                            <th scope="row"><%=i%></th>
+                            <th class="pr-0"><img src="<%= cartfood.item.image%>" alt="" style=" max-width:60%"
+                                    class="img-fluid"></th>
+                            <td class="pl-0"><%=cartfood.item.name%></td>
+                            <td><%=cartfood.item.cost%>$</td>
+                            <td class="text-center" id="qty<%=cartfood.item._id%>"><%=cartfood.qty%></td>
+                            <td>
+                                <a class="increaseval" data-cartfood-id="<%=cartfood.item._id%>"><i
+                                        class="fas fa-plus "></i></a>
+                            </td>
+                            <td>
+                                <a class="decreaseval" data-cartfood-id="<%=cartfood.item._id%>"> <i
+                                        class="fas fa-minus"></i></a>
+                            </td>
+                            <td>
+                                <a class="btn btn-sm btn-outline-danger removeval"
+                                    data-cartfood-id="<%=cartfood.item._id%>">Remove</a>
+                            </td>
+                        </tr>
+                        <%});%>
+                        <% } else {%>
+                        <% } %>
+                    </tbody>
+                    <tfoot>
                         <tr class="total">
                             <th scope="row"></th>
                             <th></th>
@@ -334,10 +345,10 @@
                             <td class="totalcost"><%= (session.cart) ? session.cart.totalCost : "0" %>$</td>
                             <td></td>
                         </tr>
-                        </tfoot>
-                        
-                    </table>
-                
+                    </tfoot>
+
+                </table>
+
             </div>
             <!--Footer-->
             <div class="modal-footer">
@@ -349,8 +360,8 @@
 </div>
 <!-- Modal: modalCart -->
 <!--checkout-->
-<div class="modal fade <%= typeof toggleCheckout !== "undefined" && toggleCheckout === true ? "modalOn" : "" %>" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
+<div class="modal fade <%= typeof toggleCheckout !== "undefined" && toggleCheckout === true ? "modalOn" : "" %>"
+    id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center">
@@ -360,34 +371,39 @@
                 </button>
             </div>
             <div class="modal-body mx-3">
-               <% if(currentUser){%>
+                <% if(currentUser){%>
                 <form action="/checkout/<%=currentUser._id %>?_method=PUT" method="post">
                     <div class="md-form mb-5">
                         <i class="fas fa-user prefix grey-text"></i>
-                        <input type="text" id="form34" class="form-control validate" value="<%=currentUser.username%>" name="user[name]">
+                        <input type="text" id="form34" class="form-control validate" value="<%=currentUser.username%>"
+                            name="user[name]">
                         <label data-error="wrong" data-success="right" for="form34">Your name</label>
                     </div>
 
                     <div class="md-form mb-5">
                         <i class="fas fa-envelope prefix grey-text"></i>
-                        <input type="email" id="form29" class="form-control validate" value="<%=currentUser.email%>" name="user[email]">
+                        <input type="email" id="form29" class="form-control validate" value="<%=currentUser.email%>"
+                            name="user[email]">
                         <label data-error="wrong" data-success="right" for="form29">Your email</label>
                     </div>
 
                     <div class="md-form mb-5">
                         <i class="fas fa-tag prefix grey-text"></i>
-                        <input type="number" id="form32" class="form-control validate" value="<%=currentUser.phoneNo%>" name="user[phoneNo]">
+                        <input type="number" id="form32" class="form-control validate" value="<%=currentUser.phoneNo%>"
+                            name="user[phoneNo]">
                         <label data-error="wrong" data-success="right" for="form32">Phone No</label>
                     </div>
 
                     <div class="md-form">
                         <i class="fas fa-pencil prefix grey-text"></i>
-                        <textarea type="text" id="form8" class="md-textarea form-control" rows="2"  name="user[address]"><%=currentUser.address%></textarea>
+                        <textarea type="text" id="form8" class="md-textarea form-control" rows="2"
+                            name="user[address]"><%=currentUser.address%></textarea>
                         <label data-error="wrong" data-success="right" for="form8">Your address</label>
                     </div>
                     <div class="md-form">
                         <i class="fas fa-tag prefix grey-text"></i>
-                        <textarea type="text" id="form8" class="md-textarea form-control" rows="3" name="user[remarks]" > <%=currentUser.remarks%></textarea>
+                        <textarea type="text" id="form8" class="md-textarea form-control" rows="3"
+                            name="user[remarks]"> <%=currentUser.remarks%></textarea>
                         <label data-error="wrong" data-success="right" for="form8">Remarks </label>
                     </div>
                     <input type="hidden" name="_csrf" value="<%=csrfToken%>">
