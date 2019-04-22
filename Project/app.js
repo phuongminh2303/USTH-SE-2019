@@ -26,8 +26,9 @@ var foodRoutes = require('./routes/foods');
 // var usersRouter = require('./routes/users');
 
 //setup db
-mongoose.set("useCreateIndex", true);
-mongoose.connect('mongodb://localhost:27017/projectdb', { useNewUrlParser: true });
+// mongoose.set("useCreateIndex", true);
+// mongoose.connect('mongodb://localhost:27017/projectdb', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://phuong:abc12345@pizzaweb-qm26h.mongodb.net/test', { useNewUrlParser: true });
 
 
 // view engine setup
@@ -83,8 +84,9 @@ app.use('/', indexRoutes);
 app.use("/foods",foodRoutes);
 // app.use('/users', usersRouter);
 
-app.listen(3000, function(){
-    console.log("Sever started at port 3000");
+var port = process.env.PORT || 3000;
+app.listen(port, function(){
+    console.log("Sever started.......");
 });
 
 

@@ -64,28 +64,28 @@ var foodData = [
     {
         name: "Braxston Beer",
         type: "drink",
-        cost: 129,
+        cost: 1.4,
         image: "https://images.unsplash.com/photo-1547122719-ebf42306abd7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60g",
         description: "200 calories"
     },
     {
         name: "Pepsi",
         type: "drink",
-        cost: 120,
+        cost: 1.4,
         image: "https://images.pexels.com/photos/1292294/pexels-photo-1292294.jpeg?auto=compress&fit=crop&w=500&q=60g",
         description: "200 calories"
     },
     {
         name: "Coke",
         type: "drink",
-        cost: 19,
+        cost: 1.4,
         image: "https://images.unsplash.com/photo-1520568444554-4698653b539c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
         description: "225 calories"
     },
     {
         name: "Juice",
         type: "drink",
-        cost: 15,
+        cost: 2,
         image: "https://images.unsplash.com/photo-1514995669114-6081e934b693?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
         description: "180 calories"
     },
